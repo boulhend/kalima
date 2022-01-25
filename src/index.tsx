@@ -1,17 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { Toaster } from "react-hot-toast";
 ReactDOM.render(
   <React.StrictMode>
+    <Toaster
+      containerStyle={{
+        position: "relative",
+      }}
+      toastOptions={{
+        duration: 500,
+        error: {
+          icon: null,
+          style: {
+            background: "black",
+            color: "white",
+            animation: "none",
+          },
+        },
+      }}
+    />
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
