@@ -55,8 +55,8 @@
   animation: scaleLetter 0.1s ease-in;
 }
 .animate-rotate-in {
-  animation: rotateIn 1s ease;
+  animation: rotateIn 0.5s ease-in;
 }
 .animate-rotate-out {
-  animation: rotateOut 1s ease;
+  animation: rotateOut 0.5s ease-in;
 }

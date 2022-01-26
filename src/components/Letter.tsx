@@ -5,17 +5,38 @@ interface Props {
 }
 
 const LetterCompoenet = ({ letter, bgColor }: Props) => {
-  const textColor = bgColor === "bg-white" ? "text-gray-900" : "text-white";
+  const [animateBgColor, setAnimateBgColor] = useState("bg-white");
+  const textColor =
+    animateBgColor === "bg-white" ? "text-gray-900" : "text-white";
   const borderColor =
-    letter === "" && bgColor === "bg-white"
+    letter === "" && animateBgColor === "bg-white"
       ? "border-[#d3d6da]"
       : "border-gray-600";
-  const borderWidth = bgColor !== "bg-white" ? "border-none" : "border-2";
+  const borderWidth =
+    animateBgColor !== "bg-white" ? "border-none" : "border-2";
+
+  useEffect(() => {
+    if (bgColor !== "bg-white") {
+      setTimeout(() => {
+        setAnimateBgColor(bgColor);
+      }, 500);
+    }
+  }, [bgColor]);
+
   return (
     <div
-      className={`w-16 h-16 ${borderWidth} ${borderColor}  m-[0.18rem] flex justify-center items-center text-4xl  ${
-        letter && "animate-letter"
-      } ${textColor} ${bgColor}`}
+      className={`w-16 h-16 ${borderWidth} ${borderColor}  m-[0.18rem] flex justify-center items-center text-4xl 
+      ${letter && "animate-letter"} ${textColor} ${
+        bgColor === "bg-white" && "bg-white"
+      }  ${
+        bgColor !== "bg-white" &&
+        animateBgColor === "bg-white" &&
+        `animate-rotate-in`
+      } ${
+        bgColor !== "bg-white" &&
+        animateBgColor !== "bg-white" &&
+        `${bgColor} animate-rotate-out`
+      }`}
     >
       {letter}
     </div>
