@@ -25,7 +25,7 @@ const LetterCompoenet = ({ letter, bgColor }: Props) => {
 
   return (
     <div
-      className={`w-16 h-16 ${borderWidth} ${borderColor}  m-[0.18rem] flex justify-center items-center text-4xl 
+      className={`w-[3.6rem] h-[3.6rem] ${borderWidth} ${borderColor}  m-[0.2rem] flex justify-center items-center text-4xl 
       ${letter && "animate-letter"} ${textColor} ${
         bgColor === "bg-white" && "bg-white"
       }  ${

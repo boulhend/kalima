@@ -154,15 +154,17 @@ function Board() {
           error={isErrors[5] ?? false}
         />
       </div>
-      <div className="flex justify-center flex-wrap my-10 w-[600px] h-[198px]">
+      <div className="flex justify-center flex-wrap my-7 w-[700px] h-[198px]">
         {keyboardLetters.map((letterObject) => {
           const { letter, bgColor, textColor } = letterObject;
           return (
             <button
               key={letter}
               className={`cursor-pointer flex justify-center items-center  ${
-                letter === "Enter" || letter === "Backspace" ? "w-40" : "w-14"
-              } ${bgColor} ${textColor} h-14 rounded-md text-lg font-bold m-1`}
+                letter === "Enter" || letter === "Backspace"
+                  ? "w-40"
+                  : "w-[3rem]"
+              } ${bgColor} ${textColor} h-[3rem] rounded-md text-lg font-bold m-1`}
               onClick={(event) =>
                 handleKeyboardClick((event.target as HTMLInputElement).value)
               }
