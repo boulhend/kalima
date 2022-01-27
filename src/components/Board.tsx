@@ -73,7 +73,7 @@ function Board() {
     if (eTarget === "Backspace" && currentWord.length > 0) {
       deleteLetterFromBoard();
     }
-    if (eTarget === "Enter" && wordsList.includes(enterdWord)) {
+    if (eTarget === "Enter") {
       handleEnter();
     }
   };
