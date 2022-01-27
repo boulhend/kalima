@@ -130,6 +130,7 @@ function Board() {
         setKeyboardLetters(newKeyboardLetters);
       }, 1200);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordColors]);
   return (
     <>
