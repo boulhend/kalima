@@ -19,7 +19,7 @@ const LetterCompoenet = ({ letter, bgColor }: Props) => {
     if (bgColor !== "bg-white") {
       setTimeout(() => {
         setAnimateBgColor(bgColor);
-      }, 350);
+      }, 300);
     }
   }, [bgColor]);
 

@@ -25,7 +25,7 @@ function Board() {
   const [wordColors, setWordColors] = useState<Array<any>>([]);
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
   const currentWord = boardWords[wordIndexRef.current];
-  const enterdWord = currentWord.slice(0, 5).join("");
+  const enterdWord = currentWord?.slice(0, 5).join("");
   const fullRightWord = "تفاحة";
   const rightWord = fullRightWord.split("");
 
@@ -82,7 +82,7 @@ function Board() {
       if (
         /[\u0600-\u06FF]/i.test(e.key) &&
         e.key.length === 1 &&
-        currentWord.length < 5 &&
+        currentWord?.length < 5 &&
         boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
       ) {
         addLetterToBoard(e.key);
