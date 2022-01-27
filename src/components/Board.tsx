@@ -26,6 +26,7 @@ function Board() {
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
   const currentWord = boardWords[wordIndexRef.current];
   const enterdWord = currentWord?.slice(0, 5).join("");
+  const [disableKeyBoard, setDisableKeyboard] = useState<boolean>(false);
   const fullRightWord = "تفاحة";
   const rightWord = fullRightWord.split("");
 
@@ -49,17 +50,18 @@ function Board() {
   const handleEnter = (): void => {
     if (currentWord.length === 5) {
       if (wordsList.includes(enterdWord)) {
+        setDisableKeyboard(true);
         const newWordColors = [...wordColors];
         newWordColors.push(compare(enterdWord.split(""), rightWord));
         setWordColors(newWordColors);
         wordIndexRef.current++;
       } else {
-        toast.error("لا توجد في لائحة الكلمات");
         handleErrorInWord();
+        toast.error("لا توجد في لائحة الكلمات");
       }
     } else if (currentWord.length < 5) {
-      toast.error("عدد الحروف غير كاف");
       handleErrorInWord();
+      toast.error("عدد الحروف غير كاف");
     }
   };
   const handleKeyboardClick = (eTarget: string) => {
@@ -94,7 +96,9 @@ function Board() {
         handleEnter();
       }
     };
-    window.addEventListener("keyup", listener);
+    if (!disableKeyBoard) {
+      window.addEventListener("keyup", listener);
+    }
     return () => {
       window.removeEventListener("keyup", listener);
     };
@@ -131,6 +135,12 @@ function Board() {
       }, 1200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wordColors]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDisableKeyboard(false);
+    }, 1200);
   }, [wordColors]);
   return (
     <>
