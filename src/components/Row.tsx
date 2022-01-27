@@ -16,7 +16,7 @@ const Row = ({ word, wordColors, error }: Props) => {
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           setBgColors((state) => [...state, wordColors[i]]);
-        }, 200 * i);
+        }, 100 * i);
       }
     }
   }, [wordColors]);

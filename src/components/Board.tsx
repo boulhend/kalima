@@ -25,7 +25,15 @@ function Board() {
   const [wordColors, setWordColors] = useState<Array<any>>([]);
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
   const currentWord = boardWords[wordIndexRef.current];
-  const rightWord = "تفاحة".split("");
+  const enterdWord = currentWord.slice(0, 5).join("");
+  const fullRightWord = "تفاحة";
+  const rightWord = fullRightWord.split("");
+
+  const handleErrorInWord = (): void => {
+    const newErrors = [...isErrors];
+    newErrors[wordIndexRef.current] = true;
+    setIsErrors(newErrors);
+  };
 
   const addLetterToBoard = (key: string): void => {
     const newBoardWords = [...boardWords];
@@ -40,7 +48,6 @@ function Board() {
 
   const handleEnter = (): void => {
     if (currentWord.length === 5) {
-      const enterdWord = currentWord.slice(0, 5).join("");
       if (wordsList.includes(enterdWord)) {
         const newWordColors = [...wordColors];
         newWordColors.push(compare(enterdWord.split(""), rightWord));
@@ -48,25 +55,25 @@ function Board() {
         wordIndexRef.current++;
       } else {
         toast.error("لا توجد في لائحة الكلمات");
-        const newErrors = [...isErrors];
-        newErrors[wordIndexRef.current] = true;
-        setIsErrors(newErrors);
+        handleErrorInWord();
       }
     } else if (currentWord.length < 5) {
       toast.error("عدد الحروف غير كاف");
-      const newErrors = [...isErrors];
-      newErrors[wordIndexRef.current] = true;
-      setIsErrors(newErrors);
+      handleErrorInWord();
     }
   };
   const handleKeyboardClick = (eTarget: string) => {
-    if (/[\u0600-\u06FF]/i.test(eTarget) && currentWord.length < 5) {
+    if (
+      /[\u0600-\u06FF]/i.test(eTarget) &&
+      currentWord.length < 5 &&
+      boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
+    ) {
       addLetterToBoard(eTarget);
     }
     if (eTarget === "Backspace" && currentWord.length > 0) {
       deleteLetterFromBoard();
     }
-    if (eTarget === "Enter") {
+    if (eTarget === "Enter" && wordsList.includes(enterdWord)) {
       handleEnter();
     }
   };
@@ -75,7 +82,8 @@ function Board() {
       if (
         /[\u0600-\u06FF]/i.test(e.key) &&
         e.key.length === 1 &&
-        currentWord.length < 5
+        currentWord.length < 5 &&
+        boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
       ) {
         addLetterToBoard(e.key);
       }
@@ -117,7 +125,10 @@ function Board() {
           return letterObject;
         }
       });
-      setKeyboardLetters(newKeyboardLetters);
+      // Waint until animation finishes then color the keyboard
+      setTimeout(() => {
+        setKeyboardLetters(newKeyboardLetters);
+      }, 1200);
     }
   }, [wordColors]);
   return (
