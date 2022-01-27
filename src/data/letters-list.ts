@@ -1,4 +1,5 @@
 export const lettersList: string[] = [
+  "ا",
   "أ",
   "إ",
   "ب",
@@ -26,8 +27,12 @@ export const lettersList: string[] = [
   "م",
   "ن",
   "ه",
-  "Backspace",
+  "ة",
   "و",
+  "ؤ",
   "ي",
+  "ئ",
+  "ى",
+  "Backspace",
   "Enter",
 ];

@@ -1,4 +1,4 @@
-export function compare(word: any, rightWord: any): any[] {
+export function compare(word: any, rightWord: any): (string | null)[] {
   const lettersColors = [];
   // Check if letter exists in the right place
   for (let i = 0; i < 5; i++) {

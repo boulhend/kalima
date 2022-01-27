@@ -5,7 +5,6 @@ function App() {
   return (
     <div className="w-1/2 mx-auto mt-16 flex flex-col items-center justify-center pb-10">
       <Board />
-      <Keyboard />
     </div>
   );
 }
