@@ -159,8 +159,7 @@ function Board() {
     ) {
       setToastData(["أحسنت !"]);
     }
-  }, [disableKeyBoard]);
-  console.log(currentWord);
+  }, [disableKeyBoard, boardWords]);
   return (
     <>
       <div className="grid grid-rows-6" dir="rtl">
