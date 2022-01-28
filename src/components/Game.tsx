@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { compare } from "../utils/compare";
-import { wordsList } from "../data/words-list";
+import { wordsList, getWordOfTheDay } from "../data/words-list";
 import { lettersList } from "../data/letters-list";
 import Row from "./Row";
 import Toast from "./Toast";
+
+const rightWord = getWordOfTheDay();
 
 function Board() {
   let wordIndexRef = useRef(0);
@@ -11,26 +13,16 @@ function Board() {
     lettersList.map((letter) => ({
       letter,
       bgColor: "bg-gray-300",
-      textColor: "text-black",
+      textColor: "text-black"
     }))
   );
-  const [boardWords, setBoardWords] = useState<Array<any>>([
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]);
+  const [boardWords, setBoardWords] = useState<Array<any>>([[], [], [], [], [], []]);
   const [wordColors, setWordColors] = useState<Array<any>>([]);
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
   const [disableKeyBoard, setDisableKeyboard] = useState<boolean>(false);
   const [toastData, setToastData] = useState<Array<any>>([]);
 
-  const currentWord = boardWords[wordIndexRef.current];
-  const enterdWord = currentWord?.slice(0, 5).join("");
-  const fullRightWord = "تفاحة";
-  const rightWord = fullRightWord.split("");
+  const typedWord = boardWords[wordIndexRef.current]?.join("");
 
   const handleErrorInWord = (): void => {
     const newErrors = [...isErrors];
@@ -50,11 +42,11 @@ function Board() {
   };
 
   const handleEnter = (): void => {
-    if (currentWord.length === 5) {
-      if (wordsList.includes(enterdWord)) {
+    if (typedWord.length === 5) {
+      if (wordsList.includes(typedWord)) {
         setDisableKeyboard(true);
         const newWordColors = [...wordColors];
-        newWordColors.push(compare(enterdWord.split(""), rightWord));
+        newWordColors.push(compare(typedWord.split(""), rightWord.split("")));
         setWordColors(newWordColors);
         wordIndexRef.current++;
       } else {
@@ -63,7 +55,7 @@ function Board() {
           setToastData([...toastData, "لا توجد في لائحة الكلمات"]);
         }
       }
-    } else if (currentWord.length < 5) {
+    } else if (typedWord.length < 5) {
       handleErrorInWord();
       if (toastData.length < 6) {
         setToastData([...toastData, "عدد الحروف غير كاف"]);
@@ -71,14 +63,11 @@ function Board() {
     }
   };
   const handleKeyboardClick = (eTarget: string) => {
-    if (
-      !disableKeyBoard &&
-      boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
-    ) {
-      if (/[\u0600-\u06FF]/i.test(eTarget) && currentWord.length < 5) {
+    if (!disableKeyBoard && boardWords[wordIndexRef.current - 1]?.join("") !== rightWord) {
+      if (/[\u0600-\u06FF]/i.test(eTarget) && typedWord.length < 5) {
         addLetterToBoard(eTarget);
       }
-      if (eTarget === "Backspace" && currentWord.length > 0) {
+      if (eTarget === "Backspace" && typedWord.length > 0) {
         deleteLetterFromBoard();
       }
       if (eTarget === "Enter") {
@@ -88,24 +77,17 @@ function Board() {
   };
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (
-        /[\u0600-\u06FF]/i.test(e.key) &&
-        e.key.length === 1 &&
-        currentWord?.length < 5
-      ) {
+      if (/[\u0600-\u06FF]/i.test(e.key) && e.key.length === 1 && typedWord?.length < 5) {
         addLetterToBoard(e.key);
       }
-      if (e.key === "Backspace" && currentWord.length > 0) {
+      if (e.key === "Backspace" && typedWord?.length > 0) {
         deleteLetterFromBoard();
       }
       if (e.key === "Enter") {
         handleEnter();
       }
     };
-    if (
-      !disableKeyBoard &&
-      boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
-    ) {
+    if (!disableKeyBoard && boardWords[wordIndexRef.current - 1]?.join("") !== rightWord) {
       window.addEventListener("keyup", listener);
     }
     return () => {
@@ -125,14 +107,12 @@ function Board() {
     if (wordColors[wordIndexRef.current - 1]?.length === 5) {
       const currentWordColors = wordColors[wordIndexRef.current - 1];
       const newKeyboardLetters = keyboardLetters.map((letterObject) => {
-        const indexOfLetter = boardWords[wordIndexRef.current - 1]?.indexOf(
-          letterObject.letter
-        );
+        const indexOfLetter = boardWords[wordIndexRef.current - 1]?.indexOf(letterObject.letter);
         if (indexOfLetter !== -1) {
           return {
             letter: letterObject.letter,
             bgColor: currentWordColors[indexOfLetter],
-            textColor: "text-white",
+            textColor: "text-white"
           };
         } else {
           return letterObject;
@@ -141,68 +121,30 @@ function Board() {
       // Waint until animation finishes then color the keyboard
       setTimeout(() => {
         setKeyboardLetters(newKeyboardLetters);
+        setDisableKeyboard(false);
       }, 1200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordColors]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setDisableKeyboard(false);
-    }, 1200);
-  }, [wordColors]);
-
-  useEffect(() => {
-    if (
-      boardWords[wordIndexRef.current - 1]?.join("") === fullRightWord &&
-      !disableKeyBoard
-    ) {
+    if (boardWords[wordIndexRef.current - 1]?.join("") === rightWord && !disableKeyBoard) {
       localStorage.setItem("result", JSON.stringify(wordColors));
       setToastData(["أحسنت !"]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disableKeyBoard, boardWords]);
+  }, [disableKeyBoard, wordColors, boardWords]);
   useEffect(() => {
-    console.log(wordIndexRef);
-    if (wordIndexRef.current === 6 && enterdWord !== fullRightWord) {
-      setToastData([fullRightWord]);
+    if (wordIndexRef.current === 6 && typedWord !== rightWord) {
+      setToastData([rightWord]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wordIndexRef.current]);
+  }, [typedWord]);
 
   return (
     <>
       <div className="grid grid-rows-6" dir="rtl">
-        <Row
-          word={boardWords[0]}
-          wordColors={wordColors[0] ?? []}
-          error={isErrors[0] ?? false}
-        />
-        <Row
-          word={boardWords[1]}
-          wordColors={wordColors[1] ?? []}
-          error={isErrors[1] ?? false}
-        />
-        <Row
-          word={boardWords[2]}
-          wordColors={wordColors[2] ?? []}
-          error={isErrors[2] ?? false}
-        />
-        <Row
-          word={boardWords[3]}
-          wordColors={wordColors[3] ?? []}
-          error={isErrors[3] ?? false}
-        />
-        <Row
-          word={boardWords[4]}
-          wordColors={wordColors[4] ?? []}
-          error={isErrors[4] ?? false}
-        />
-        <Row
-          word={boardWords[5]}
-          wordColors={wordColors[5] ?? []}
-          error={isErrors[5] ?? false}
-        />
+        {[0, 1, 2, 3, 4, 5].map((row) => (
+          <Row key={row} word={boardWords[row]} wordColors={wordColors[row] ?? []} error={isErrors[row] ?? false} />
+        ))}
       </div>
       <div className="flex justify-center flex-wrap mt-7 w-[700px] h-[198px]">
         {keyboardLetters.map((letterObject) => {
@@ -211,13 +153,9 @@ function Board() {
             <button
               key={letter}
               className={`cursor-pointer flex justify-center items-center  ${
-                letter === "Enter" || letter === "Backspace"
-                  ? "w-40"
-                  : "w-[3rem]"
+                letter === "Enter" || letter === "Backspace" ? "w-40" : "w-[3rem]"
               } ${bgColor} ${textColor} h-[3rem] rounded-md text-lg font-bold m-1`}
-              onClick={(event) =>
-                handleKeyboardClick((event.target as HTMLInputElement).value)
-              }
+              onClick={(event) => handleKeyboardClick((event.target as HTMLInputElement).value)}
               value={letter}
             >
               {letter}
@@ -225,11 +163,7 @@ function Board() {
           );
         })}
       </div>
-      <Toast
-        toastData={toastData}
-        setToastData={setToastData}
-        rightWord={fullRightWord}
-      />
+      <Toast toastData={toastData} setToastData={setToastData} rightWord={rightWord} />
     </>
   );
 }

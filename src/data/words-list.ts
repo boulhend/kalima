@@ -11,6 +11,7 @@ export const wordsList: string[] = [
   "لدينا",
   "الناس",
   "علينا",
+  "تفاهة",
   "واحدة",
   "مرحبا",
   "العمل",
@@ -9373,7 +9374,6 @@ export const wordsList: string[] = [
   "شخــص",
   "بشفرة",
   "حلوتى",
-  "ceeee",
   "زميلى",
   "نيمان",
   "قارنت",
@@ -9441,7 +9441,6 @@ export const wordsList: string[] = [
   "هربتي",
   "وقائد",
   "مرسلة",
-  "young",
   "معاكس",
   "وأقتل",
   "بشكوى",
@@ -9500,7 +9499,6 @@ export const wordsList: string[] = [
   "وليـس",
   "كانني",
   "عموده",
-  "being",
   "شديدا",
   "رفعوا",
   "بعجلة",
@@ -9650,7 +9648,6 @@ export const wordsList: string[] = [
   "صلاتك",
   "المسه",
   "فلسوف",
-  "santa",
   "وفرصة",
   "ادمان",
   "اشرحي",
@@ -9702,7 +9699,6 @@ export const wordsList: string[] = [
   "لشارع",
   "فاحشة",
   "نكسون",
-  "close",
   "وكانا",
   "ورقتك",
   "لنقبض",
@@ -9739,9 +9735,7 @@ export const wordsList: string[] = [
   "لتحدي",
   "راجان",
   "إمرتي",
-  "watch",
   "مخيبة",
-  "round",
   "بإبني",
   "حاخام",
   "ويدفع",
@@ -9824,7 +9818,6 @@ export const wordsList: string[] = [
   "لنرفع",
   "نائية",
   "ورقات",
-  "years",
   "اوغاد",
   "لتأتى",
   "ودرجة",
@@ -9863,9 +9856,7 @@ export const wordsList: string[] = [
   "رسلكم",
   "ذنوبك",
   "دافيز",
-  "outta",
   "نقترح",
-  "ready",
   "هيئته",
   "عروسي",
   "فاذهب",
@@ -9954,7 +9945,6 @@ export const wordsList: string[] = [
   "لرأسه",
   "لأشرب",
   "حلزون",
-  "jesus",
   "لوهان",
   "جولتك",
   "جياني",
@@ -10035,5 +10025,17 @@ export const wordsList: string[] = [
   "إبدئي",
   "وخائف",
   "فيفان",
-  "لوسون",
+  "لوسون"
 ];
+
+export const getWordOfTheDay = (): string => {
+  const TODAY = new Date();
+  const start = new Date(2022, 0, 27);
+  const diff = Number(TODAY) - Number(start);
+  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  while (day > wordsList.length) {
+    day--;
+  }
+  return wordsList[day];
+};

@@ -26,10 +26,7 @@ const Toast = ({ toastData, setToastData, rightWord }: Props) => {
     <div className="absolute top-[5.3rem]">
       {toastData
         ? toastData.map((toast: string, index: number) => (
-            <div
-              key={index}
-              className="flex justify-center items-center w-auto px-2 h-12 rounded-md  bg-black text-white mb-5"
-            >
+            <div key={index} className="flex justify-center items-center w-auto px-2 h-12 rounded-md  bg-black text-white mb-5">
               {toast === rightWord ? `الكلمة الصحيحة :  ${rightWord}` : toast}
             </div>
           ))

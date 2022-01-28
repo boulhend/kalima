@@ -23,9 +23,7 @@ const Modal = () => {
         }  flex-nowrap justify-center items-center absolute p-0 m-0 top-0 right-0 w-screen h-screen bg-white/70 z-30`}
       ></div>
       <div
-        className={` z-50 absolute ${dsiplay} flex-col w-1/3 h-2/3 bg-white drop-shadow-2xl p-3 ${
-          close ? " animate-slideOut" : "animate-slideIn"
-        }`}
+        className={` z-50 absolute ${dsiplay} flex-col w-1/3 h-2/3 bg-white drop-shadow-2xl p-3 ${close ? " animate-slide-out" : "animate-slide-in"}`}
       >
         <div className="cursor-pointer" onClick={handleClick}>
           <Close />

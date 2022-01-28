@@ -22,11 +22,9 @@ const Row = ({ word, wordColors, error }: Props) => {
   }, [wordColors]);
   return (
     <div className={`grid grid-cols-5 ${error && "animate-vibrate"}`} dir="rtl">
-      <Letter letter={word[0] ?? ""} bgColor={bgColors[0] ?? defaultBgColor} />
-      <Letter letter={word[1] ?? ""} bgColor={bgColors[1] ?? defaultBgColor} />
-      <Letter letter={word[2] ?? ""} bgColor={bgColors[2] ?? defaultBgColor} />
-      <Letter letter={word[3] ?? ""} bgColor={bgColors[3] ?? defaultBgColor} />
-      <Letter letter={word[4] ?? ""} bgColor={bgColors[4] ?? defaultBgColor} />
+      {[0, 1, 2, 3, 4].map((lett) => (
+        <Letter key={lett} letter={word[lett] ?? ""} bgColor={bgColors[lett] ?? defaultBgColor} />
+      ))}
     </div>
   );
 };

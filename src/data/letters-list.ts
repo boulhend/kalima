@@ -34,5 +34,5 @@ export const lettersList: string[] = [
   "ئ",
   "ى",
   "Backspace",
-  "Enter",
+  "Enter"
 ];
