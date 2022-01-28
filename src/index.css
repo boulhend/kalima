@@ -47,6 +47,14 @@
     transform: rotateX(0deg);
   }
 }
+@keyframes toast {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 .animate-vibrate {
   animation: vibration 0.8s ease-in;
@@ -59,4 +67,7 @@
 }
 .animate-rotate-out {
   animation: rotateOut 0.35s ease-in;
+}
+.animate-toast {
+  animation: toast 0.2s ease-in;
 }

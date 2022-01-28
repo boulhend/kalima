@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import toast from "react-hot-toast";
 import { compare } from "../utils/compare";
 import { wordsList } from "../data/words-list";
 import { lettersList } from "../data/letters-list";
 import Row from "./Row";
+import Toast from "./Toast";
 
 function Board() {
   let wordIndexRef = useRef(0);
@@ -24,9 +24,11 @@ function Board() {
   ]);
   const [wordColors, setWordColors] = useState<Array<any>>([]);
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
+  const [disableKeyBoard, setDisableKeyboard] = useState<boolean>(false);
+  const [toastData, setToastData] = useState<Array<any>>([]);
+
   const currentWord = boardWords[wordIndexRef.current];
   const enterdWord = currentWord?.slice(0, 5).join("");
-  const [disableKeyBoard, setDisableKeyboard] = useState<boolean>(false);
   const fullRightWord = "تفاحة";
   const rightWord = fullRightWord.split("");
 
@@ -57,26 +59,31 @@ function Board() {
         wordIndexRef.current++;
       } else {
         handleErrorInWord();
-        toast.error("لا توجد في لائحة الكلمات");
+        if (toastData.length < 6) {
+          setToastData([...toastData, "لا توجد في لائحة الكلمات"]);
+        }
       }
     } else if (currentWord.length < 5) {
       handleErrorInWord();
-      toast.error("عدد الحروف غير كاف");
+      if (toastData.length < 6) {
+        setToastData([...toastData, "عدد الحروف غير كاف"]);
+      }
     }
   };
   const handleKeyboardClick = (eTarget: string) => {
     if (
-      /[\u0600-\u06FF]/i.test(eTarget) &&
-      currentWord.length < 5 &&
+      !disableKeyBoard &&
       boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
     ) {
-      addLetterToBoard(eTarget);
-    }
-    if (eTarget === "Backspace" && currentWord.length > 0) {
-      deleteLetterFromBoard();
-    }
-    if (eTarget === "Enter") {
-      handleEnter();
+      if (/[\u0600-\u06FF]/i.test(eTarget) && currentWord.length < 5) {
+        addLetterToBoard(eTarget);
+      }
+      if (eTarget === "Backspace" && currentWord.length > 0) {
+        deleteLetterFromBoard();
+      }
+      if (eTarget === "Enter") {
+        handleEnter();
+      }
     }
   };
   useEffect(() => {
@@ -84,8 +91,7 @@ function Board() {
       if (
         /[\u0600-\u06FF]/i.test(e.key) &&
         e.key.length === 1 &&
-        currentWord?.length < 5 &&
-        boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
+        currentWord?.length < 5
       ) {
         addLetterToBoard(e.key);
       }
@@ -96,7 +102,10 @@ function Board() {
         handleEnter();
       }
     };
-    if (!disableKeyBoard) {
+    if (
+      !disableKeyBoard &&
+      boardWords[wordIndexRef.current - 1]?.join("") !== fullRightWord
+    ) {
       window.addEventListener("keyup", listener);
     }
     return () => {
@@ -142,6 +151,16 @@ function Board() {
       setDisableKeyboard(false);
     }, 1200);
   }, [wordColors]);
+
+  useEffect(() => {
+    if (
+      boardWords[wordIndexRef.current - 1]?.join("") === fullRightWord &&
+      !disableKeyBoard
+    ) {
+      setToastData(["أحسنت !"]);
+    }
+  }, [disableKeyBoard]);
+  console.log(currentWord);
   return (
     <>
       <div className="grid grid-rows-6" dir="rtl">
@@ -197,6 +216,7 @@ function Board() {
           );
         })}
       </div>
+      <Toast toastData={toastData} setToastData={setToastData} />
     </>
   );
 }
