@@ -157,9 +157,19 @@ function Board() {
       boardWords[wordIndexRef.current - 1]?.join("") === fullRightWord &&
       !disableKeyBoard
     ) {
+      localStorage.setItem("result", JSON.stringify(wordColors));
       setToastData(["أحسنت !"]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disableKeyBoard, boardWords]);
+  useEffect(() => {
+    console.log(wordIndexRef);
+    if (wordIndexRef.current === 6 && enterdWord !== fullRightWord) {
+      setToastData([fullRightWord]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wordIndexRef.current]);
+
   return (
     <>
       <div className="grid grid-rows-6" dir="rtl">
@@ -194,7 +204,7 @@ function Board() {
           error={isErrors[5] ?? false}
         />
       </div>
-      <div className="flex justify-center flex-wrap my-7 w-[700px] h-[198px]">
+      <div className="flex justify-center flex-wrap mt-7 w-[700px] h-[198px]">
         {keyboardLetters.map((letterObject) => {
           const { letter, bgColor, textColor } = letterObject;
           return (
@@ -215,7 +225,11 @@ function Board() {
           );
         })}
       </div>
-      <Toast toastData={toastData} setToastData={setToastData} />
+      <Toast
+        toastData={toastData}
+        setToastData={setToastData}
+        rightWord={fullRightWord}
+      />
     </>
   );
 }
