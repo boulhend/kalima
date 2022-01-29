@@ -1,6 +1,6 @@
 # Kalima
 
-"Kalima" is an arabic version of the famous game [https://www.powerlanguage.co.uk/wordle/](Wordle) made by [https://twitter.com/powerlanguish](Josh Wardle).
+"Kalima" is an arabic version of the famous game [Wordle](https://www.powerlanguage.co.uk/wordle/) made by [Josh Wardle](https://twitter.com/powerlanguish).
 
 ### Technologies
 
