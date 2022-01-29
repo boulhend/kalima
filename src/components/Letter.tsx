@@ -18,7 +18,7 @@ const LetterCompoenet = ({ letter, bgColor }: Props) => {
         setAnimateBgColor(bgColor);
       }, 300);
     }
-  }, [bgColor]);
+  }, [bgColor, letterInitial]);
 
   return (
     <div
