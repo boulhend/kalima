@@ -10028,14 +10028,17 @@ export const wordsList: string[] = [
   "لوسون"
 ];
 
-export const getWordOfTheDay = (): string => {
+export const day = (): number => {
   const TODAY = new Date();
   const start = new Date(2022, 0, 27);
   const diff = Number(TODAY) - Number(start);
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+};
 
-  while (day > wordsList.length) {
-    day--;
+export const getWordOfTheDay = (): string => {
+  let theDay = day();
+  while (theDay > wordsList.length) {
+    theDay--;
   }
-  return wordsList[day];
+  return wordsList[theDay];
 };

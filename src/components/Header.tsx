@@ -1,7 +1,16 @@
-const Header = () => {
+import Statistics from "./icons/Statistics";
+
+interface Props {
+  closeModal: boolean;
+  setCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const Header = ({ closeModal, setCloseModal }: Props) => {
   return (
-    <div className="mb-6 border-b-2 w-[700px] text-center py-2 ">
-      <h1 className="text-4xl">كلمة</h1>
+    <div className="flex items-center justify-start mb-6 border-b-2 w-[500px] text-center py-2 ">
+      <button className="" onClick={() => setCloseModal(false)}>
+        <Statistics />
+      </button>
+      <h1 className="text-4xl w-full">كلمة</h1>
     </div>
   );
 };

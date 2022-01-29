@@ -12,6 +12,7 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 @keyframes vibration {
   0%,
   100% {
@@ -67,7 +68,7 @@ body {
 }
 @keyframes slideIn {
   0% {
-    transform: translateY(-30px);
+    transform: translateY(40px);
     opacity: 0;
   }
   100% {
@@ -81,7 +82,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: translateY(60px);
+    transform: translateY(40px);
     opacity: 0;
   }
 }
@@ -102,8 +103,8 @@ body {
   animation: toast 0.2s ease-in;
 }
 .animate-slide-in {
-  animation: slideIn 0.3s ease;
+  animation: slideIn 0.2s ease;
 }
 .animate-slide-out {
-  animation: slideOut 0.3s ease;
+  animation: slideOut 0.2s ease;
 }

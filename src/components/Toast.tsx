@@ -3,7 +3,7 @@ import { useEffect } from "react";
 interface Props {
   toastData: Array<any>;
   setToastData: React.Dispatch<React.SetStateAction<any[]>>;
-  rightWord: string;
+  rightWord?: string;
 }
 
 const Toast = ({ toastData, setToastData, rightWord }: Props) => {

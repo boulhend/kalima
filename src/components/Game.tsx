@@ -7,7 +7,13 @@ import Toast from "./Toast";
 
 const rightWord = getWordOfTheDay();
 
-function Board() {
+interface Props {
+  wordColors: any[];
+  setWordColors: React.Dispatch<React.SetStateAction<any[]>>;
+  setCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setGameResult: React.Dispatch<React.SetStateAction<string>>;
+}
+const Board = ({ wordColors, setWordColors, setCloseModal, setGameResult }: Props) => {
   let wordIndexRef = useRef(0);
   const [keyboardLetters, setKeyboardLetters] = useState(() =>
     lettersList.map((letter) => ({
@@ -17,7 +23,6 @@ function Board() {
     }))
   );
   const [boardWords, setBoardWords] = useState<Array<any>>([[], [], [], [], [], []]);
-  const [wordColors, setWordColors] = useState<Array<any>>([]);
   const [isErrors, setIsErrors] = useState<Array<boolean>>([]);
   const [disableKeyBoard, setDisableKeyboard] = useState<boolean>(false);
   const [toastData, setToastData] = useState<Array<any>>([]);
@@ -62,7 +67,7 @@ function Board() {
       }
     }
   };
-  const handleKeyboardClick = (eTarget: string) => {
+  const handleKeyboardClick = (eTarget: string): void => {
     if (!disableKeyBoard && boardWords[wordIndexRef.current - 1]?.join("") !== rightWord) {
       if (/[\u0600-\u06FF]/i.test(eTarget) && typedWord.length < 5) {
         addLetterToBoard(eTarget);
@@ -129,15 +134,24 @@ function Board() {
 
   useEffect(() => {
     if (boardWords[wordIndexRef.current - 1]?.join("") === rightWord && !disableKeyBoard) {
-      localStorage.setItem("result", JSON.stringify(wordColors));
       setToastData(["أحسنت !"]);
+      setTimeout(() => {
+        setCloseModal(false);
+        setGameResult("win");
+      }, 1200);
     }
-  }, [disableKeyBoard, wordColors, boardWords]);
+  }, [disableKeyBoard, setCloseModal, setGameResult, wordColors, boardWords]);
   useEffect(() => {
     if (wordIndexRef.current === 6 && typedWord !== rightWord) {
-      setToastData([rightWord]);
+      setTimeout(() => {
+        setToastData([rightWord]);
+      }, 1200);
+      setTimeout(() => {
+        setCloseModal(false);
+        setGameResult("lose");
+      }, 2000);
     }
-  }, [typedWord]);
+  }, [typedWord, setGameResult, setCloseModal, wordColors]);
 
   return (
     <>
@@ -166,6 +180,6 @@ function Board() {
       <Toast toastData={toastData} setToastData={setToastData} rightWord={rightWord} />
     </>
   );
-}
+};
 
 export default Board;

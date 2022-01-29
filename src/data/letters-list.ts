@@ -36,3 +36,10 @@ export const lettersList: string[] = [
   "Backspace",
   "Enter"
 ];
+
+export const letterColors = {
+  letterInitial: "bg-white",
+  letterAbsent: "bg-gray-500",
+  letterExist: "bg-yellow-500",
+  letterRight: "bg-green-700"
+};
