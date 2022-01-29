@@ -4,4 +4,4 @@
 
 ### Technologies
 
-This app is built with [React.js](https://reactjs.org/) ,styled with [Tailwindcss](https://tailwindcss.com/) and deployed in [Vercel](https://vercel.com/).
+[Kalima](https://www.kalima.vercel.app) is built with [React.js](https://reactjs.org/) ,styled with [Tailwindcss](https://tailwindcss.com/) and deployed in [Vercel](https://vercel.com/).
