@@ -6,7 +6,7 @@ interface Props {
 }
 const Header = ({ closeModal, setCloseModal }: Props) => {
   return (
-    <div className="flex items-center justify-start mb-6 border-b-2 w-[500px] text-center py-2 ">
+    <div className="flex items-center justify-start mb-6 border-b-2 w-[31rem] text-center py-2 ">
       <button className="" onClick={() => setCloseModal(false)}>
         <Statistics />
       </button>

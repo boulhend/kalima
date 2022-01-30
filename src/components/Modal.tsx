@@ -38,7 +38,6 @@ const Modal = ({ gameResult, data, closeModal, setCloseModal }: Props) => {
           .join("");
       })
       .join("\n");
-    console.log(clipBoard);
     navigator.clipboard.writeText(`${title}\n\n${clipBoard} `).then(() => setToastData([...toastData, "نسخت !"]));
   };
   return (
