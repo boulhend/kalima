@@ -155,20 +155,20 @@ const Board = ({ wordColors, setWordColors, setCloseModal, setGameResult }: Prop
 
   return (
     <>
-      <div className="grid grid-rows-6" dir="rtl">
+      <div className="grid grid-rows-6 sm:px-3" dir="rtl">
         {[0, 1, 2, 3, 4, 5].map((row) => (
           <Row key={row} word={boardWords[row]} wordColors={wordColors[row] ?? []} error={isErrors[row] ?? false} />
         ))}
       </div>
-      <div className="flex justify-center flex-wrap mt-7 w-[44rem] xl:w-full xl:h-auto h-[11.7rem]">
+      <div className="flex justify-center flex-wrap mt-7 w-[44rem] sm:px-3 xl:w-full xl:h-auto h-[11.7rem]">
         {keyboardLetters.map((letterObject) => {
           const { letter, bgColor, textColor } = letterObject;
           return (
             <button
               key={letter}
               className={`cursor-pointer flex justify-center items-center  ${
-                letter === "Enter" || letter === "Backspace" ? "w-40" : "w-[3rem]"
-              } ${bgColor} ${textColor} h-[3rem] rounded-md text-lg font-bold m-1`}
+                letter === "Enter" || letter === "Backspace" ? "w-40 sm:w-32" : "w-[3rem] sm:w-[2.5rem]"
+              } ${bgColor} ${textColor} h-[3rem] sm:h-[2.5rem] rounded-md text-lg font-bold m-1`}
               onClick={(event) => handleKeyboardClick((event.target as HTMLInputElement).value)}
               value={letter}
             >
