@@ -45,7 +45,7 @@ const Modal = ({ gameResult, data, closeModal, setCloseModal }: Props) => {
       <div
         className={`${
           closeModal ? "hidden" : "flex"
-        }  flex-nowrap justify-center items-center absolute p-0 m-0 top-0 right-0 bottom-0 w-screen h-full bg-white/70 z-30`}
+        }  flex-nowrap justify-center items-center absolute p-0 m-0 top-0 right-0 bottom-0 w-full h-full bg-white/70 z-30`}
         onClick={handleClick}
       ></div>
       <div

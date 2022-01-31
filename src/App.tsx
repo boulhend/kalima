@@ -8,7 +8,7 @@ function App() {
   const [gameResult, setGameResult] = useState<string>("idle");
 
   return (
-    <div className="w-1/2 relative mx-auto flex flex-col items-center justify-center pb-10 min-h-full">
+    <div className="w-1/2 xl:w-2/3 md:w-full relative mx-auto flex flex-col items-center justify-center pb-10 min-h-full">
       <Header closeModal={closeModal} setCloseModal={setCloseModal} />
       <Game wordColors={wordColors} setWordColors={setWordColors} setCloseModal={setCloseModal} setGameResult={setGameResult} />
       <Modal gameResult={gameResult} data={wordColors} closeModal={closeModal} setCloseModal={setCloseModal} />

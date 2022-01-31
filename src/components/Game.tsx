@@ -160,7 +160,7 @@ const Board = ({ wordColors, setWordColors, setCloseModal, setGameResult }: Prop
           <Row key={row} word={boardWords[row]} wordColors={wordColors[row] ?? []} error={isErrors[row] ?? false} />
         ))}
       </div>
-      <div className="flex justify-center flex-wrap mt-7 w-[44rem] h-[11.7rem]">
+      <div className="flex justify-center flex-wrap mt-7 w-[44rem] xl:w-full xl:h-auto h-[11.7rem]">
         {keyboardLetters.map((letterObject) => {
           const { letter, bgColor, textColor } = letterObject;
           return (
