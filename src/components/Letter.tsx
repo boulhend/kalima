@@ -22,7 +22,7 @@ const LetterCompoenet = ({ letter, bgColor }: Props) => {
 
   return (
     <div
-      className={`w-[3.6rem] h-[3.6rem] sm:w-[3rem] sm:h-[3rem] ${borderWidth} ${borderColor}  m-[0.2rem] flex justify-center items-center text-4xl 
+      className={`w-[3.6rem] h-[3.6rem] sm:w-[3rem] sm:h-[3rem] sm:text-2xl ${borderWidth} ${borderColor}  m-[0.2rem] flex justify-center items-center text-4xl 
       ${letter && "animate-letter"} ${textColor} ${bgColor === letterInitial && letterInitial}  ${
         bgColor !== letterInitial && animateBgColor === letterInitial && `animate-rotate-in`
       } ${bgColor !== letterInitial && animateBgColor !== letterInitial && `${bgColor} animate-rotate-out`}`}
